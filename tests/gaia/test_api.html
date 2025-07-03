@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIA Agentic System - Test Interface</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .section h2 {
+            color: #34495e;
+            margin-top: 0;
+        }
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 14px;
+            resize: vertical;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        .response {
+            background-color: #ecf0f1;
+            border: 1px solid #bdc3c7;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .success {
+            border-color: #27ae60;
+            background-color: #d5f4e6;
+        }
+        .error {
+            border-color: #e74c3c;
+            background-color: #fadbd8;
+        }
+        .loading {
+            color: #f39c12;
+            font-weight: bold;
+        }
+        .file-upload {
+            margin: 10px 0;
+        }
+        .file-upload input[type="file"] {
+            margin: 5px 0;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-online {
+            background-color: #27ae60;
+        }
+        .status-offline {
+            background-color: #e74c3c;
+        }
+        .endpoint-info {
+            background-color: #e8f4fd;
+            border: 1px solid #3498db;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 GAIA Agentic System - Test Interface</h1>
+        
+        <!-- System Status -->
+        <div class="section">
+            <h2>📊 System Status</h2>
+            <div id="systemStatus">
+                <span class="status-indicator status-offline"></span>
+                <span>Checking system status...</span>
+            </div>
+            <button onclick="checkSystemHealth()">Refresh Status</button>
+        </div>
+
+        <!-- GAIA Answer Endpoint -->
+        <div class="section">
+            <h2>🎯 GAIA Answer Endpoint</h2>
+            <div class="endpoint-info">
+                <strong>Endpoint:</strong> POST /gaia-answer<br>
+                <strong>Format:</strong> Returns GAIA benchmark compatible response with answer, reasoning, and sources
+            </div>
+            
+            <label for="gaiaQuestion"><strong>Question:</strong></label>
+            <textarea id="gaiaQuestion" placeholder="Enter your GAIA question here...">I'm making a grocery list for my mom, but she's a professor of botany and she's a real stickler when it comes to categorizing things. I need to add different foods to different categories on the grocery list, but if I make a mistake, she won't buy anything inserted in the wrong category. Here's the list I have so far:
+
+milk, eggs, flour, whole bean coffee, Oreos, sweet potatoes, fresh basil, plums, green beans, rice, corn, bell pepper, whole allspice, acorns, broccoli, celery, zucchini, lettuce, peanuts
+
+I need to make headings for the fruits and vegetables. Could you please create a list of just the vegetables from my list? If you could do that, then I can figure out how to categorize the rest of the list into the appropriate categories. But remember that my mom is a real stickler, so make sure that no botanical fruits end up on the vegetable list, or she won't get them when she's at the store. Please alphabetize the list of vegetables, and place each item in a comma separated list.</textarea>
+            
+            <div class="file-upload">
+                <label><strong>Files (optional):</strong></label>
+                <input type="file" id="gaiaFiles" multiple accept=".pdf,.txt,.csv,.json,.png,.jpg,.jpeg,.gif,.bmp,.mp3,.wav,.mp4,.avi,.mov,.docx,.xlsx,.pptx">
+            </div>
+            
+            <button onclick="testGaiaAnswer()" id="gaiaButton">Test GAIA Answer</button>
+            <button onclick="clearGaiaResponse()">Clear Response</button>
+            
+            <div id="gaiaResponse" class="response" style="display: none;"></div>
+        </div>
+
+        <!-- Query Agent Endpoint -->
+        <div class="section">
+            <h2>🔍 Query Agent Endpoint</h2>
+            <div class="endpoint-info">
+                <strong>Endpoint:</strong> POST /query-agent<br>
+                <strong>Format:</strong> Returns detailed agent response with intermediate steps
+            </div>
+            
+            <label for="queryQuestion"><strong>Question:</strong></label>
+            <textarea id="queryQuestion" placeholder="Enter your question here...">What are the impacts of climate change on biodiversity?</textarea>
+            
+            <button onclick="testQueryAgent()" id="queryButton">Test Query Agent</button>
+            <button onclick="clearQueryResponse()">Clear Response</button>
+            
+            <div id="queryResponse" class="response" style="display: none;"></div>
+        </div>
+
+        <!-- MCP Status -->
+        <div class="section">
+            <h2>🔧 MCP Server Status</h2>
+            <button onclick="checkMcpStatus()">Check MCP Status</button>
+            <div id="mcpStatus" class="response" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+
+        // Check system health
+        async function checkSystemHealth() {
+            const statusElement = document.getElementById('systemStatus');
+            
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    statusElement.innerHTML = `
+                        <span class="status-indicator status-online"></span>
+                        <span>System Online - ${data.status}</span>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                statusElement.innerHTML = `
+                    <span class="status-indicator status-offline"></span>
+                    <span>System Offline - ${error.message}</span>
+                `;
+            }
+        }
+
+        // Test GAIA Answer endpoint
+        async function testGaiaAnswer() {
+            const question = document.getElementById('gaiaQuestion').value;
+            const responseDiv = document.getElementById('gaiaResponse');
+            const button = document.getElementById('gaiaButton');
+            
+            if (!question.trim()) {
+                alert('Please enter a question');
+                return;
+            }
+
+            button.disabled = true;
+            button.textContent = 'Processing...';
+            responseDiv.style.display = 'block';
+            responseDiv.className = 'response loading';
+            responseDiv.textContent = 'Processing your question... This may take a few minutes.';
+
+            try {
+                const payload = {
+                    question: question,
+                    files: [] // File upload handling would be added here
+                };
+
+                const response = await fetch(`${API_BASE}/gaia-answer`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    responseDiv.className = 'response success';
+                    responseDiv.textContent = JSON.stringify(data, null, 2);
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${data.detail || 'Unknown error'}`);
+                }
+            } catch (error) {
+                responseDiv.className = 'response error';
+                responseDiv.textContent = `Error: ${error.message}`;
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Test GAIA Answer';
+            }
+        }
+
+        // Test Query Agent endpoint
+        async function testQueryAgent() {
+            const question = document.getElementById('queryQuestion').value;
+            const responseDiv = document.getElementById('queryResponse');
+            const button = document.getElementById('queryButton');
+            
+            if (!question.trim()) {
+                alert('Please enter a question');
+                return;
+            }
+
+            button.disabled = true;
+            button.textContent = 'Processing...';
+            responseDiv.style.display = 'block';
+            responseDiv.className = 'response loading';
+            responseDiv.textContent = 'Processing your question... This may take a few minutes.';
+
+            try {
+                const payload = { question: question };
+
+                const response = await fetch(`${API_BASE}/query-agent`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    responseDiv.className = 'response success';
+                    responseDiv.textContent = JSON.stringify(data, null, 2);
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${data.detail || 'Unknown error'}`);
+                }
+            } catch (error) {
+                responseDiv.className = 'response error';
+                responseDiv.textContent = `Error: ${error.message}`;
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Test Query Agent';
+            }
+        }
+
+        // Check MCP status
+        async function checkMcpStatus() {
+            const responseDiv = document.getElementById('mcpStatus');
+            
+            responseDiv.style.display = 'block';
+            responseDiv.className = 'response loading';
+            responseDiv.textContent = 'Checking MCP server status...';
+
+            try {
+                const response = await fetch(`${API_BASE}/mcp/status`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    responseDiv.className = 'response success';
+                    responseDiv.textContent = JSON.stringify(data, null, 2);
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                responseDiv.className = 'response error';
+                responseDiv.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        // Clear response functions
+        function clearGaiaResponse() {
+            document.getElementById('gaiaResponse').style.display = 'none';
+        }
+
+        function clearQueryResponse() {
+            document.getElementById('queryResponse').style.display = 'none';
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            checkSystemHealth();
+        });
+    </script>
+</body>
+</html>

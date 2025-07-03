@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+# .env - Commented out to include env file in Docker build
+.DS_Store
+.vscode/
+*.log

@@ -1,0 +1,52 @@
+# Core API dependencies
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.4.2
+pydantic-settings>=2.0.3
+python-dotenv>=1.0.0
+
+# LLM and LangChain dependencies
+langgraph>=0.1.0
+langchain-core>=0.1.0
+langchain-openai>=0.1.0
+langchain-community>=0.1.0
+langchain-experimental>=0.0.50  # For code execution tools
+
+# LangFuse monitoring
+langfuse>=2.0.0
+
+# Tool integrations
+tavily-python>=0.2.2
+requests>=2.31.0
+
+# Multi-modal processing (for vision tasks and documents)
+pillow>=10.0.0
+PyPDF2>=3.0.0  # For PDF text extraction fallback
+python-docx>=0.8.11  # For DOCX document processing
+python-pptx>=0.6.21  # For PPTX presentation processing
+xlrd>=2.0.1  # For XLS file reading
+xlsxwriter>=3.1.0  # For XLSX file writing
+librosa>=0.10.0  # For audio file processing (MP3, WAV, etc.)
+opencv-python>=4.8.0  # For video file processing (MP4, AVI, etc.)
+moviepy>=1.0.3  # For video file manipulation and analysis
+mutagen>=1.47.0  # For audio metadata extraction
+
+# MCP Server essentials
+beautifulsoup4>=4.12.0  # For academic search HTML parsing
+sympy>=1.12.0  # For math calculator
+simpleeval>=0.9.13  # For safe expression evaluation
+matplotlib>=3.7.0  # For math calculator plotting
+
+# GAIA benchmark submission
+huggingface_hub>=0.20.0
+
+# Secure Codex Agent dependencies
+docker>=6.1.0  # For secure containerized code execution
+numpy>=1.24.0  # For numerical computations
+pandas>=2.0.0  # For data analysis and CSV processing
+pillow>=10.0.0  # For image processing (already included above but ensuring version)
+reportlab>=4.0.0  # For PDF generation
+openpyxl>=3.1.0  # For Excel file processing
+
+# Docling - Advanced document processing
+# docling>=2.34.0  # Advanced PDF understanding, multi-format support, OCR (commented out for testing fallback)
