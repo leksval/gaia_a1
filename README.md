@@ -1,4 +1,4 @@
-# GAIA Agentic System - Production-Ready AI Agent Framework
+# GAIA Agentic System - General Purpose AI Agent Framework
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![GAIA Benchmark](https://img.shields.io/badge/GAIA%20L1%20Score-55%25-brightgreen)](https://github.com/GAIA-benchmark/GAIA)
