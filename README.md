@@ -42,6 +42,12 @@ GAIA Agentic System is an advanced AI-powered question-answering platform optimi
 
 The system leverages **LangChain Core** for standardized LLM interactions and supports multiple LLM backends including Google Gemini, OpenAI GPT models, and local Ollama models. The main agent implementation uses **LangGraph** for workflow orchestration.
 
+
+### GAIA Benchmark Testing
+
+#### 🏆 **GAIA Benchmark Performance: 55% Score**
+
+This system achieved a **55% score** on the official GAIA benchmark, demonstrating strong performance across diverse question types including mathematical calculations, document analysis, multimodal processing, and complex reasoning tasks.
 ## Key Features
 
 ### 🧠 Advanced Reasoning
@@ -327,11 +333,6 @@ curl -X POST "http://localhost:8000/gaia-answer" \
      -d '{"question": "GAIA test question", "files": []}'
 ```
 
-### GAIA Benchmark Testing
-
-#### 🏆 **GAIA Benchmark Performance: 55% Score**
-
-Our system achieved a **55% score** on the official GAIA benchmark, demonstrating strong performance across diverse question types including mathematical calculations, document analysis, multimodal processing, and complex reasoning tasks.
 
 #### **Performance Analysis:**
 - **Strengths**: Mathematical calculations (90%+), text analysis (80%+), basic reasoning (75%+)
